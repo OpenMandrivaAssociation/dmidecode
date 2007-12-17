@@ -11,7 +11,6 @@ Source0:	http://www.nongnu.org/dmidecode/download/%{name}-%{version}.tar.bz2
 URL:		http://www.nongnu.org/dmidecode/
 License:	GPL
 Group:		System/Kernel and hardware
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Conflicts:	drakxtools-backend <= 10.3-0.64mdk
 
 %description
