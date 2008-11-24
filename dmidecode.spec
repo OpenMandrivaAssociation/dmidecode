@@ -1,6 +1,6 @@
 %define	name	dmidecode
-%define	version	2.9
-%define	release	%mkrel 4
+%define	version	2.10
+%define	release	%mkrel 1
 
 Summary:	Tool for dumping a computer's DMI table contents
 Name:		%{name}
@@ -9,7 +9,7 @@ Release:	%{release}
 
 Source0:	http://www.nongnu.org/dmidecode/download/%{name}-%{version}.tar.bz2
 URL:		http://www.nongnu.org/dmidecode/
-License:	GPL
+License:	GPLv2+
 Group:		System/Kernel and hardware
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Conflicts:	drakxtools-backend <= 10.3-0.64mdk
@@ -28,7 +28,7 @@ when needed.
 %setup -q
 
 %build
-%make 
+%make CFLAGS="%{optflags}" LDFLAGS="%{?ldflags}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -43,5 +43,3 @@ rm -rf $RPM_BUILD_ROOT
 %doc README LICENSE AUTHORS CHANGELOG
 %{_sbindir}/*
 %{_mandir}/man8/*
-
-
