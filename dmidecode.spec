@@ -1,6 +1,6 @@
 %define	name	dmidecode
 %define	version	2.10
-%define	release	%mkrel 1
+%define	release	%mkrel 2
 
 Summary:	Tool for dumping a computer's DMI table contents
 Name:		%{name}
