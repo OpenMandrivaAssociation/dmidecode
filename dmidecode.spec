@@ -8,6 +8,7 @@ Version:	%{version}
 Release:	%{release}
 
 Source0:	http://www.nongnu.org/dmidecode/download/%{name}-%{version}.tar.bz2
+Patch0:		dmidecode-2.10-fix-build.patch
 URL:		http://www.nongnu.org/dmidecode/
 License:	GPLv2+
 Group:		System/Kernel and hardware
@@ -26,6 +27,7 @@ when needed.
 
 %prep
 %setup -q
+%patch0 -p0
 
 %build
 %make CFLAGS="%{optflags}" LDFLAGS="%{?ldflags}"
