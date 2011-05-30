@@ -1,13 +1,13 @@
 %define	name	dmidecode
-%define	version	2.10
-%define	release	%mkrel 5
+%define	version	2.11
+%define	release	%mkrel 1
 
 Summary:	Tool for dumping a computer's DMI table contents
 Name:		%{name}
 Version:	%{version}
 Release:	%{release}
 
-Source0:	http://www.nongnu.org/dmidecode/download/%{name}-%{version}.tar.bz2
+Source0:	http://download.savannah.gnu.org/releases/dmidecode/%{name}-%{version}.tar.bz2
 Patch0:		dmidecode-2.10-fix-build.patch
 URL:		http://www.nongnu.org/dmidecode/
 License:	GPLv2+
