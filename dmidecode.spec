@@ -21,7 +21,7 @@ when needed.
 %setup -q
 
 %build
-%make CFLAGS="%{optflags}" LDFLAGS="%{?ldflags}"
+%make CFLAGS="%{optflags}" LDFLAGS="%{?ldflags}" CC=%{__cc}
 
 %install
 %makeinstall_std prefix=%{_prefix} mandir=%{_mandir}
