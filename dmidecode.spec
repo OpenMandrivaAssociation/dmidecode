@@ -1,11 +1,12 @@
 Summary:	Tool for dumping a computer's DMI table contents
 Name:		dmidecode
 Version:	2.12
-Release:	5
+Release:	6
 License:	GPLv2+
 Group:		System/Kernel and hardware
 Url:		http://www.nongnu.org/dmidecode/
 Source0:	http://download.savannah.gnu.org/releases/dmidecode/%{name}-%{version}.tar.bz2
+Patch0:		dmidecode-2.12-smbios_fix.patch
 
 %description
 Dmidecode is a tool for dumping a computer's DMI (some say SMBIOS) table
@@ -19,6 +20,7 @@ when needed.
 
 %prep
 %setup -q
+%patch0 -p1 -b .smbios_fix~
 
 %build
 %make CFLAGS="%{optflags}" LDFLAGS="%{?ldflags}" CC=%{__cc}
@@ -31,4 +33,3 @@ rm -rf %{buildroot}%{_defaultdocdir}/%{name}
 %doc README LICENSE AUTHORS CHANGELOG
 %{_sbindir}/*
 %{_mandir}/man8/*
-
