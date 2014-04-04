@@ -1,0 +1,30 @@
+--- dmidecode-2.12/Makefile~	2014-04-04 13:45:50.596788634 +0200
++++ dmidecode-2.12/Makefile	2014-04-04 13:45:53.044620262 +0200
+@@ -57,6 +57,19 @@ all : $(PROGRAMS)
+ # Programs
+ #
+ 
++ifdef WHOLE_PROGRAM
++dmidecode : dmidecode.c dmiopt.c dmioem.c util.c
++	$(CC) $(CFLAGS) $(LDFLAGS) -fwhole-program -flto $^ -o $@
++
++biosdecode : biosdecode.c util.c
++	$(CC) $(CFLAGS) $(LDFLAGS) -fwhole-program -flto $^ -o $@
++
++ownership : ownership.c util.c
++	$(CC) $(CFLAGS) $(LDFLAGS) -fwhole-program -flto $^ -o $@
++
++vpddecode : vpddecode.c vpdopt.c util.c
++	$(CC) $(CFLAGS) $(LDFLAGS) -fwhole-program -flto $^ -o $@
++else
+ dmidecode : dmidecode.o dmiopt.o dmioem.o util.o
+ 	$(CC) $(LDFLAGS) dmidecode.o dmiopt.o dmioem.o util.o -o $@
+ 
+@@ -68,6 +81,7 @@ ownership : ownership.o util.o
+ 
+ vpddecode : vpddecode.o vpdopt.o util.o
+ 	$(CC) $(LDFLAGS) vpddecode.o vpdopt.o util.o -o $@
++endif
+ 
+ #
+ # Objects
