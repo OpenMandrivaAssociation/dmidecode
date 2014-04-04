@@ -1,3 +1,5 @@
+%bcond_without	uclibc
+
 Summary:	Tool for dumping a computer's DMI table contents
 Name:		dmidecode
 Version:	2.12
@@ -19,18 +21,36 @@ portions of code depending on the hardware vendor. Thus, dmidecode is mainly
 used to detect system "signatures" and add them to the kernel source code
 when needed.
 
+%package -n	uclibc-%{name}
+Summary:	Tool for dumping a computer's DMI table contents (uClibc)
+Group:		System/Kernel and hardware
+
 %prep
 %setup -q
 %patch0 -p1 -b .smbios_fix~
+%if %{with uclibc}
+mkdir .uclibc
+cp -a * .uclibc
+%endif
 
 %build
+%if %{with uclibc}
+pushd .uclibc
+%make CFLAGS="%{uclibc_cflags}" LDFLAGS="%{?ldflags}" CC=%{uclibc_cc}
+popd
+%endif
+
 %make CFLAGS="%{optflags}" LDFLAGS="%{?ldflags}" CC=%{__cc}
 
 %install
+%if %{with uclibc}
+%makeinstall_std -C .uclibc prefix=%{uclibc_root}%{_prefix} mandir=%{_mandir}
+rm -r %{buildroot}%{uclibc_root}%{_docdir}/%{name}
+%endif
 %makeinstall_std prefix=%{_prefix} mandir=%{_mandir}
 
 %files
-%doc %{_defaultdocdir}/%{name}
+%doc %{_docdir}/%{name}
 %{_sbindir}/dmidecode
 %ifnarch ia64
 %{_sbindir}/vpddecode
@@ -38,3 +58,13 @@ when needed.
 %{_sbindir}/biosdecode
 %endif
 %{_mandir}/man8/*
+
+%if %{with uclibc}
+%files -n uclibc-%{name}
+%{uclibc_root}%{_sbindir}/dmidecode
+%ifnarch ia64
+%{uclibc_root}%{_sbindir}/vpddecode
+%{uclibc_root}%{_sbindir}/ownership
+%{uclibc_root}%{_sbindir}/biosdecode
+%endif
+%endif
