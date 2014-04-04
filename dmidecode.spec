@@ -28,10 +28,9 @@ when needed.
 
 %install
 %makeinstall_std prefix=%{_prefix} mandir=%{_mandir}
-rm -rf %{buildroot}%{_defaultdocdir}/%{name}
 
 %files
-%doc README LICENSE AUTHORS CHANGELOG
+%doc %{_defaultdocdir}/%{name}
 %{_sbindir}/dmidecode
 %ifnarch ia64
 %{_sbindir}/vpddecode
