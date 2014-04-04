@@ -7,6 +7,7 @@ Group:		System/Kernel and hardware
 Url:		http://www.nongnu.org/dmidecode/
 Source0:	http://download.savannah.gnu.org/releases/dmidecode/%{name}-%{version}.tar.bz2
 Patch0:		dmidecode-2.12-smbios_fix.patch
+ExclusiveArch:	%{ix86} x86_64 ia64
 
 %description
 Dmidecode is a tool for dumping a computer's DMI (some say SMBIOS) table
@@ -31,5 +32,10 @@ rm -rf %{buildroot}%{_defaultdocdir}/%{name}
 
 %files
 %doc README LICENSE AUTHORS CHANGELOG
-%{_sbindir}/*
+%{_sbindir}/dmidecode
+%ifnarch ia64
+%{_sbindir}/vpddecode
+%{_sbindir}/ownership
+%{_sbindir}/biosdecode
+%endif
 %{_mandir}/man8/*
