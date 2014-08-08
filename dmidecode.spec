@@ -9,6 +9,7 @@ Group:		System/Kernel and hardware
 Url:		http://www.nongnu.org/dmidecode/
 Source0:	http://download.savannah.gnu.org/releases/dmidecode/%{name}-%{version}.tar.bz2
 Patch0:		dmidecode-2.12-smbios_fix.patch
+# (tpg) does not work with clang
 Patch1:		dmidecode-2.12-whole-program.patch
 ExclusiveArch:	%{ix86} x86_64 ia64
 
@@ -29,7 +30,6 @@ Group:		System/Kernel and hardware
 %prep
 %setup -q
 %patch0 -p1 -b .smbios_fix~
-%patch1 -p1 -b .whole_program~
 
 %if %{with uclibc}
 mkdir .uclibc
@@ -39,18 +39,18 @@ cp -a * .uclibc
 %build
 %if %{with uclibc}
 pushd .uclibc
-%make CFLAGS="%{uclibc_cflags}" LDFLAGS="%{?ldflags}" CC=%{uclibc_cc} WHOLE_PROGRAM=1
+%make CFLAGS="%{uclibc_cflags}" LDFLAGS="%{?ldflags}" CC=%{uclibc_cc}
 popd
 %endif
 
-%make CFLAGS="%{optflags}" LDFLAGS="%{?ldflags}" CC=%{__cc} WHOLE_PROGRAM=1
+%make CFLAGS="%{optflags}" LDFLAGS="%{?ldflags}" CC=%{__cc}
 
 %install
 %if %{with uclibc}
-%makeinstall_std -C .uclibc CFLAGS="%{optflags}" LDFLAGS="%{?ldflags}" CC=%{__cc} WHOLE_PROGRAM=1 prefix=%{uclibc_root}%{_prefix} mandir=%{_mandir}
+%makeinstall_std -C .uclibc CFLAGS="%{optflags}" LDFLAGS="%{?ldflags}" CC=%{__cc} prefix=%{uclibc_root}%{_prefix} mandir=%{_mandir}
 rm -r %{buildroot}%{uclibc_root}%{_docdir}/%{name}
 %endif
-%makeinstall_std prefix=%{_prefix} mandir=%{_mandir} CFLAGS="%{optflags}" LDFLAGS="%{?ldflags}" CC=%{__cc} WHOLE_PROGRAM=1
+%makeinstall_std prefix=%{_prefix} mandir=%{_mandir} CFLAGS="%{optflags}" LDFLAGS="%{?ldflags}" CC=%{__cc}
 
 %files
 %doc %{_docdir}/%{name}
