@@ -11,7 +11,7 @@ Source0:	http://download.savannah.gnu.org/releases/dmidecode/%{name}-%{version}.
 Patch0:		dmidecode-2.12-smbios_fix.patch
 # (tpg) does not work with clang
 Patch1:		dmidecode-2.12-whole-program.patch
-ExclusiveArch:	%{ix86} x86_64 ia64
+#ExclusiveArch:	%{ix86} x86_64 ia64
 
 %description
 Dmidecode is a tool for dumping a computer's DMI (some say SMBIOS) table
@@ -55,7 +55,7 @@ rm -r %{buildroot}%{uclibc_root}%{_docdir}/%{name}
 %files
 %doc %{_docdir}/%{name}
 %{_sbindir}/dmidecode
-%ifnarch ia64
+%ifnarch ia64 %armx
 %{_sbindir}/vpddecode
 %{_sbindir}/ownership
 %{_sbindir}/biosdecode
@@ -65,7 +65,7 @@ rm -r %{buildroot}%{uclibc_root}%{_docdir}/%{name}
 %if %{with uclibc}
 %files -n uclibc-%{name}
 %{uclibc_root}%{_sbindir}/dmidecode
-%ifnarch ia64
+%ifnarch ia64 %armx
 %{uclibc_root}%{_sbindir}/vpddecode
 %{uclibc_root}%{_sbindir}/ownership
 %{uclibc_root}%{_sbindir}/biosdecode
