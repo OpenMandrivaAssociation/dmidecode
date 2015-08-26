@@ -1,9 +1,9 @@
-%bcond_without	uclibc
+%bcond_with	uclibc
 
 Summary:	Tool for dumping a computer's DMI table contents
 Name:		dmidecode
 Version:	2.12
-Release:	10
+Release:	11
 License:	GPLv2+
 Group:		System/Kernel and hardware
 Url:		http://www.nongnu.org/dmidecode/
