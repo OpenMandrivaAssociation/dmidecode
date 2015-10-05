@@ -2,15 +2,16 @@
 
 Summary:	Tool for dumping a computer's DMI table contents
 Name:		dmidecode
-Version:	2.12
-Release:	11
+Version:	3.0
+Release:	1
 License:	GPLv2+
 Group:		System/Kernel and hardware
 Url:		http://www.nongnu.org/dmidecode/
-Source0:	http://download.savannah.gnu.org/releases/dmidecode/%{name}-%{version}.tar.bz2
-Patch0:		dmidecode-2.12-smbios_fix.patch
+Source0:	http://download.savannah.gnu.org/releases/dmidecode/%{name}-%{version}.tar.xz
+%if %{with uclibc}
 # (tpg) does not work with clang
 Patch1:		dmidecode-2.12-whole-program.patch
+%endif
 #ExclusiveArch:	%{ix86} x86_64 ia64
 
 %description
@@ -29,7 +30,6 @@ Group:		System/Kernel and hardware
 
 %prep
 %setup -q
-%patch0 -p1 -b .smbios_fix~
 
 %if %{with uclibc}
 mkdir .uclibc
