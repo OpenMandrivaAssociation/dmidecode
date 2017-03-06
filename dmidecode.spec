@@ -1,17 +1,11 @@
-%bcond_with	uclibc
-
 Summary:	Tool for dumping a computer's DMI table contents
 Name:		dmidecode
 Version:	3.0
-Release:	3
+Release:	4
 License:	GPLv2+
 Group:		System/Kernel and hardware
 Url:		http://www.nongnu.org/dmidecode/
 Source0:	http://download.savannah.gnu.org/releases/dmidecode/%{name}-%{version}.tar.xz
-%if %{with uclibc}
-# (tpg) does not work with clang
-Patch1:		dmidecode-2.12-whole-program.patch
-%endif
 #ExclusiveArch:	%{ix86} x86_64 ia64
 
 %description
@@ -24,32 +18,14 @@ portions of code depending on the hardware vendor. Thus, dmidecode is mainly
 used to detect system "signatures" and add them to the kernel source code
 when needed.
 
-%package -n	uclibc-%{name}
-Summary:	Tool for dumping a computer's DMI table contents (uClibc)
-Group:		System/Kernel and hardware
-
 %prep
 %setup -q
 
-%if %{with uclibc}
-mkdir .uclibc
-cp -a * .uclibc
-%endif
-
 %build
-%if %{with uclibc}
-pushd .uclibc
-%make CFLAGS="%{uclibc_cflags}" LDFLAGS="%{?ldflags}" CC=%{uclibc_cc}
-popd
-%endif
-
+%setup_compile_flags
 %make CFLAGS="%{optflags}" LDFLAGS="%{?ldflags}" CC=%{__cc}
 
 %install
-%if %{with uclibc}
-%makeinstall_std -C .uclibc CFLAGS="%{optflags}" LDFLAGS="%{?ldflags}" CC=%{__cc} prefix=%{uclibc_root}%{_prefix} mandir=%{_mandir}
-rm -r %{buildroot}%{uclibc_root}%{_docdir}/%{name}
-%endif
 %makeinstall_std prefix=%{_prefix} mandir=%{_mandir} CFLAGS="%{optflags}" LDFLAGS="%{?ldflags}" CC=%{__cc}
 
 %files
@@ -61,13 +37,3 @@ rm -r %{buildroot}%{uclibc_root}%{_docdir}/%{name}
 %{_sbindir}/biosdecode
 %endif
 %{_mandir}/man8/*
-
-%if %{with uclibc}
-%files -n uclibc-%{name}
-%{uclibc_root}%{_sbindir}/dmidecode
-%ifnarch ia64 %armx
-%{uclibc_root}%{_sbindir}/vpddecode
-%{uclibc_root}%{_sbindir}/ownership
-%{uclibc_root}%{_sbindir}/biosdecode
-%endif
-%endif
