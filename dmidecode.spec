@@ -1,7 +1,7 @@
 Summary:	Tool for dumping a computer's DMI table contents
 Name:		dmidecode
 Version:	3.1
-Release:	1
+Release:	2
 License:	GPLv2+
 Group:		System/Kernel and hardware
 Url:		http://www.nongnu.org/dmidecode/
