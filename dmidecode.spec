@@ -31,7 +31,7 @@ when needed.
 %files
 %doc %{_docdir}/%{name}
 %{_sbindir}/dmidecode
-%ifnarch ia64 %armx
+%ifnarch ia64 %armx %{riscv}
 %{_sbindir}/vpddecode
 %{_sbindir}/ownership
 %{_sbindir}/biosdecode
