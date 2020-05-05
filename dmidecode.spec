@@ -42,7 +42,7 @@ when needed.
 %autosetup -p1
 
 %build
-%setup_compile_flags
+%set_build_flags
 %make_build CFLAGS="%{optflags}" LDFLAGS="%{?ldflags}" CC=%{__cc}
 
 %install
