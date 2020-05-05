@@ -1,0 +1,37 @@
+From 5bb7eb173b72256f70c6b3f3916d7a444be93340 Mon Sep 17 00:00:00 2001
+From: Jean Delvare <jdelvare@suse.de>
+Date: Mon, 23 Mar 2020 16:47:23 +0100
+Subject: [PATCH 19/40] dmidecode: Don't choke on invalid processor voltage
+
+If the processor voltage encoding has some of the reserved bits set
+and none of the proper bits set, print it as "Unknown" instead of an
+empty field.
+
+Signed-off-by: Jean Delvare <jdelvare@suse.de>
+---
+ dmidecode.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/dmidecode.c b/dmidecode.c
+index 71c166f..ef9bbd5 100644
+--- a/dmidecode.c
++++ b/dmidecode.c
+@@ -1190,13 +1190,13 @@ static void dmi_processor_voltage(u8 code)
+ 
+ 	if (code & 0x80)
+ 		printf(" %.1f V", (float)(code & 0x7f) / 10);
++	else if ((code & 0x07) == 0x00)
++		printf(" Unknown");
+ 	else
+ 	{
+ 		for (i = 0; i <= 2; i++)
+ 			if (code & (1 << i))
+ 				printf(" %s", voltage[i]);
+-		if (code == 0x00)
+-			printf(" Unknown");
+ 	}
+ }
+ 
+-- 
+2.26.2
+

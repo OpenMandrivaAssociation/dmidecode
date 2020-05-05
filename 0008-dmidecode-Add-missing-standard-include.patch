@@ -1,0 +1,28 @@
+From 2d7fbeac6c6a9f097dc930e808a4f017f11f3c58 Mon Sep 17 00:00:00 2001
+From: Claudio Fontana <claudio.fontana@gliwa.com>
+Date: Fri, 19 Apr 2019 10:01:22 +0200
+Subject: [PATCH 08/40] dmidecode: Add missing standard include
+
+AF_INET requires sys/socket.h, fixes build on QNX 7.0.
+
+Signed-off-by: Claudio Fontana <claudio.fontana@gliwa.com>
+Signed-off-by: Jean Delvare <jdelvare@suse.de>
+---
+ dmidecode.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/dmidecode.c b/dmidecode.c
+index 91c6f62..21bfd65 100644
+--- a/dmidecode.c
++++ b/dmidecode.c
+@@ -66,6 +66,7 @@
+ #include <stdlib.h>
+ #include <unistd.h>
+ #include <arpa/inet.h>
++#include <sys/socket.h>
+ 
+ #ifdef __FreeBSD__
+ #include <errno.h>
+-- 
+2.26.2
+

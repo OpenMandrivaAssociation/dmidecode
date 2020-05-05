@@ -1,0 +1,66 @@
+From 3a455213068eb3a3572908c77fafae35e5360998 Mon Sep 17 00:00:00 2001
+From: Erwan Velu <e.velu@criteo.com>
+Date: Mon, 7 Oct 2019 15:36:47 +0200
+Subject: [PATCH 13/40] dmidecode: Adding firmware-revision support to -s
+ option
+
+Most of servers like HPe, QCT, report the BMC version via the
+Firmware Revision field. Add an option to the -s to export this
+information directly.
+
+A typical usage of this feature looks like:
+
+	[root@host ~]$ dmidecode -s firmware-revision
+	3.93
+
+Signed-off-by: Erwan Velu <e.velu@criteo.com>
+Signed-off-by: Jean Delvare <jdelvare@suse.de>
+---
+ dmidecode.c     | 4 ++++
+ dmiopt.c        | 1 +
+ man/dmidecode.8 | 2 +-
+ 3 files changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/dmidecode.c b/dmidecode.c
+index e4cd6d8..aef18f8 100644
+--- a/dmidecode.c
++++ b/dmidecode.c
+@@ -5086,6 +5086,10 @@ static void dmi_table_string(const struct dmi_header *h, const u8 *data, u16 ver
+ 			if (data[key - 1] != 0xFF && data[key] != 0xFF)
+ 				printf("%u.%u\n", data[key - 1], data[key]);
+ 			break;
++		case 0x017: /* -s firmware-revision */
++			if (data[key - 1] != 0xFF && data[key] != 0xFF)
++				printf("%u.%u\n", data[key - 1], data[key]);
++			break;
+ 		case 0x108:
+ 			dmi_system_uuid(data + offset, ver);
+ 			printf("\n");
+diff --git a/dmiopt.c b/dmiopt.c
+index 9ceb35a..1c3b760 100644
+--- a/dmiopt.c
++++ b/dmiopt.c
+@@ -152,6 +152,7 @@ static const struct string_keyword opt_string_keyword[] = {
+ 	{ "bios-version", 0, 0x05 },
+ 	{ "bios-release-date", 0, 0x08 },
+ 	{ "bios-revision", 0, 0x15 },		/* 0x14 and 0x15 */
++	{ "firmware-revision", 0, 0x17 },	/* 0x16 and 0x17 */
+ 	{ "system-manufacturer", 1, 0x04 },
+ 	{ "system-product-name", 1, 0x05 },
+ 	{ "system-version", 1, 0x06 },
+diff --git a/man/dmidecode.8 b/man/dmidecode.8
+index c3f8713..4602088 100644
+--- a/man/dmidecode.8
++++ b/man/dmidecode.8
+@@ -74,7 +74,7 @@ displayed. Meta-data and handle references are hidden.
+ Only display the value of the \s-1DMI\s0 string identified by \fBKEYWORD\fR.
+ \fBKEYWORD\fR must be a keyword from the following list: \fBbios-vendor\fR,
+ \fBbios-version\fR, \fBbios-release-date\fR,
+-\fBbios-revision\fR,
++\fBbios-revision\fR, \fBfirmware-revision\fR,
+ \fBsystem-manufacturer\fR, \fBsystem-product-name\fR,
+ \fBsystem-version\fR, \fBsystem-serial-number\fR,
+ \fBsystem-uuid\fR, \fBsystem-family\fR,
+-- 
+2.26.2
+

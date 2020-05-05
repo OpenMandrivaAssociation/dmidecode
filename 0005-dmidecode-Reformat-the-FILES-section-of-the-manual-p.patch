@@ -1,0 +1,42 @@
+From 91d6ce2d1d2fa6fcedf8e5685bafdb0515317605 Mon Sep 17 00:00:00 2001
+From: Jean Delvare <jdelvare@suse.de>
+Date: Tue, 29 Jan 2019 14:11:38 +0100
+Subject: [PATCH 05/40] dmidecode: Reformat the FILES section of the manual
+ page
+
+List one file per line and use regular font for comments. This makes
+the FILES section a lot more readable.
+
+Signed-off-by: Jean Delvare <jdelvare@suse.de>
+---
+ man/dmidecode.8 | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
+
+diff --git a/man/dmidecode.8 b/man/dmidecode.8
+index df861e1..33f7d33 100644
+--- a/man/dmidecode.8
++++ b/man/dmidecode.8
+@@ -1,4 +1,4 @@
+-.TH DMIDECODE 8 "March 2012" "dmidecode"
++.TH DMIDECODE 8 "January 2019" "dmidecode"
+ .SH NAME
+ dmidecode \- \s-1DMI\s0 table decoder
+ .SH SYNOPSIS
+@@ -258,8 +258,12 @@ The DMI table is located at offset 0x20.
+ 
+ .SH FILES
+ .I /dev/mem
+-.I /sys/firmware/dmi/tables/smbios_entry_point (Linux only)
+-.I /sys/firmware/dmi/tables/DMI (Linux only)
++.br
++.I /sys/firmware/dmi/tables/smbios_entry_point
++(Linux only)
++.br
++.I /sys/firmware/dmi/tables/DMI
++(Linux only)
+ .SH BUGS
+ More often than not, information contained in the \s-1DMI\s0 tables is inaccurate,
+ incomplete or simply wrong.
+-- 
+2.26.2
+
