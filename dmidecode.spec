@@ -1,7 +1,7 @@
 Summary:	Tool for dumping a computer's DMI table contents
 Name:		dmidecode
-Version:	3.3
-Release:	2
+Version:	3.5
+Release:	1
 License:	GPLv2+
 Group:		System/Kernel and hardware
 Url:		http://www.nongnu.org/dmidecode/
@@ -25,7 +25,7 @@ when needed.
 %make_build CFLAGS="%{optflags}" LDFLAGS="%{?ldflags}" CC=%{__cc}
 
 %install
-%make_install prefix=%{_prefix} mandir=%{_mandir} CFLAGS="%{optflags}" LDFLAGS="%{?ldflags}" CC=%{__cc}
+%make_install prefix=%{_prefix} mandir=%{_mandir} sbindir=%{_sbindir} CFLAGS="%{optflags}" LDFLAGS="%{?ldflags}" CC=%{__cc}
 
 %files
 %doc %{_docdir}/%{name}
