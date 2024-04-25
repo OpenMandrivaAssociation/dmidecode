@@ -5,12 +5,12 @@
 
 Summary:	Tool for dumping a computer's DMI table contents
 Name:		dmidecode
-Version:	3.5
-Release:	3
+Version:	3.6
+Release:	1
 License:	GPLv2+
 Group:		System/Kernel and hardware
-Url:		http://www.nongnu.org/dmidecode/
-Source0:	http://download.savannah.gnu.org/releases/dmidecode/%{name}-%{version}.tar.xz
+Url:		https://www.nongnu.org/dmidecode/
+Source0:	https://download.savannah.gnu.org/releases/dmidecode/%{name}-%{version}.tar.xz
 
 %description
 Dmidecode is a tool for dumping a computer's DMI (some say SMBIOS) table
