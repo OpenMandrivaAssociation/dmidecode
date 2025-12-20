@@ -5,12 +5,14 @@
 
 Summary:	Tool for dumping a computer's DMI table contents
 Name:		dmidecode
-Version:	3.6
+Version:	3.7
 Release:	1
 License:	GPLv2+
 Group:		System/Kernel and hardware
 Url:		https://www.nongnu.org/dmidecode/
 Source0:	https://download.savannah.gnu.org/releases/dmidecode/%{name}-%{version}.tar.xz
+BuildRequires:	make
+BuildRequires:	pkgconfig(bash-completion)
 
 %description
 Dmidecode is a tool for dumping a computer's DMI (some say SMBIOS) table
@@ -35,9 +37,10 @@ when needed.
 %files
 %doc %{_docdir}/%{name}
 %{_sbindir}/dmidecode
-%ifnarch ia64 %{armx} %{riscv}
+%ifarch %{ix86} %{x86_64}
 %{_sbindir}/vpddecode
 %{_sbindir}/ownership
 %{_sbindir}/biosdecode
 %endif
 %doc %{_mandir}/man8/*
+%{_datadir}/bash-completion/completions/*
